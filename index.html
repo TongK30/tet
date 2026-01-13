@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xuân Yêu Thương - TTYT Ngã Năm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #FFFAF0; /* Floral White - Warm neutral */
+            color: #4A4A4A;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair+Display', serif;
+        }
+        .hero-pattern {
+            background-color: #D32F2F; /* Deep Red for Tet */
+            background-image: radial-gradient(#E57373 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        /* Chart Container Styling per requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Max width constraint */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Base height */
+            max-height: 400px; /* Max height constraint */
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .btn-primary {
+            background-color: #D32F2F;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #B71C1C;
+        }
+        .section-intro {
+            background-color: #FEF2F2; /* Red 50 */
+            border-left: 4px solid #D32F2F;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: #5D5D5D;
+        }
+    </style>
+    <!-- Chosen Palette: Tet Harmony (Warm Neutrals #FFFAF0, Deep Red #D32F2F for accents, Dark Grey #4A4A4A for text) -->
+    <!-- Application Structure Plan: 
+         1. Hero Section: Sets the emotional tone.
+         2. Context & Story: Explains the 'Why'.
+         3. Interactive Needs Assessment: Visualizes donations.
+         4. Image Gallery: Shows real-world impact (Moved UP as requested).
+         5. Action Center (Donate): How to give.
+         6. Commitment & Trust: Transparency.
+    -->
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center gap-2">
+                        <!-- LOGO CỦA BẠN (Thay đường dẫn ảnh bên dưới) -->
+                        <img src="./logo.png" 
+                             alt="Logo Đơn Vị" 
+                             class="w-10 h-10 rounded-full object-cover border border-gray-200">
+                        
+                        <span class="font-bold text-gray-800 hidden sm:block">TTYT Khu Vực Ngã Năm</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="scrollToSection('story')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Câu Chuyện</button>
+                    <button onclick="scrollToSection('needs')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Nhu Cầu</button>
+                    <button onclick="scrollToSection('gallery')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Hoạt động sẻ chia</button>
+                    <button onclick="scrollToSection('donate')" class="bg-red-700 text-white hover:bg-red-800 px-4 py-2 rounded-md text-sm font-medium">Ủng Hộ Ngay</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-pattern text-white py-16 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+        <div class="relative z-10 max-w-3xl mx-auto">
+            <p class="text-red-100 font-medium mb-2 uppercase tracking-wide">Thư Ngỏ Vận Động Tài Trợ</p>
+            <h1 class="text-4xl sm:text-5xl font-bold mb-6 leading-tight">Chương Trình <br/><span class="text-yellow-300">"XUÂN YÊU THƯƠNG"</span></h1>
+            <p class="text-xl text-red-50 mb-8 max-w-2xl mx-auto">
+                Hỗ trợ bệnh nhân có hoàn cảnh khó khăn tại Trung tâm Y tế khu vực Ngã Năm vui Tết, đón Xuân.
+            </p>
+            <div class="flex justify-center gap-4">
+                <button onclick="scrollToSection('story')" class="bg-white text-red-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition">
+                    Tìm Hiểu Thêm
+                </button>
+            </div>
+        </div>
+        <!-- Decorative CSS Circles (No SVG) -->
+        <div class="absolute top-0 left-0 -ml-20 -mt-20 w-64 h-64 rounded-full bg-red-600 opacity-20 blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 -mr-20 -mb-20 w-80 h-80 rounded-full bg-yellow-500 opacity-20 blur-3xl"></div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        <!-- Section 1: The Story (Context) -->
+        <section id="story" class="scroll-mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="section-intro rounded-r-lg">
+                        <p><strong>Giới thiệu phần này:</strong> Dưới đây là tâm thư từ Ban Tổ chức, chia sẻ về bối cảnh và lý do ra đời của chương trình "Xuân Yêu Thương". Phần này giúp Quý vị hiểu rõ hơn về những khó khăn mà các bệnh nhân đang đối mặt.</p>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Lời Ngỏ Từ Trái Tim</h2>
+                    <div class="prose text-gray-600 space-y-4 text-justify">
+                        <p>
+                            Kính thưa Quý đơn vị, mạnh thường quân và các nhà hảo tâm. Lời đầu tiên, Công đoàn – Chi đoàn Y tế và Tổ công tác xã hội tại Trung tâm Y tế khu vực Ngã Năm xin gửi lời chúc sức khỏe, bình an và thành công đến Quý vị.
+                        </p>
+                        <p>
+                            Mùa Xuân ấm áp là dịp để sum vầy đoàn tụ bên gia đình. Tuy nhiên, tại Trung tâm của chúng tôi, vẫn còn nhiều bệnh nhân đang mang trong mình gánh nặng bệnh tật và những khó khăn chồng chất về kinh tế. Họ không thể hưởng một cái Tết trọn vẹn.
+                        </p>
+                        <p class="font-medium text-red-700 italic border-l-2 border-red-200 pl-4">
+                            "Mỗi phần quà tuy nhỏ bé nhưng là liều thuốc tinh thần quý giá, giúp bệnh nhân vơi bớt lo lắng, an tâm điều trị."
+                        </p>
+                        <p>
+                            Xuất phát từ tinh thần nhân ái "Lá lành đùm lá rách", Ban Tổ chức phát động chương trình <strong>"Xuân Yêu Thương"</strong> với mong muốn mang những phần quà Tết nghĩa tình đến tận tay các bệnh nhân.
+                        </p>
+                    </div>
+                </div>
+                <!-- Interactive Highlight Card -->
+                <div class="card p-8 bg-red-50 border border-red-100 text-center">
+                    <h3 class="text-2xl font-bold text-red-800 mb-4">Sứ Mệnh Của Chúng Tôi</h3>
+                    <div class="space-y-6">
+                        <div class="p-4 bg-white rounded shadow-sm hover:shadow-md transition cursor-default group">
+                            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">🤝</div>
+                            <h4 class="font-bold text-gray-800">Kết Nối</h4>
+                            <p class="text-sm text-gray-500">Mạnh thường quân với bệnh nhân khó khăn</p>
+                        </div>
+                        <div class="p-4 bg-white rounded shadow-sm hover:shadow-md transition cursor-default group">
+                            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">🎁</div>
+                            <h4 class="font-bold text-gray-800">Sẻ Chia</h4>
+                            <p class="text-sm text-gray-500">Trao tặng nhu yếu phẩm thiết yếu</p>
+                        </div>
+                        <div class="p-4 bg-white rounded shadow-sm hover:shadow-md transition cursor-default group">
+                            <div class="text-3xl mb-2 group-hover:scale-110 transition-transform inline-block">❤️</div>
+                            <h4 class="font-bold text-gray-800">Động Viên</h4>
+                            <p class="text-sm text-gray-500">Tiếp thêm niềm tin và nghị lực sống</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Needs Assessment (Visualization) -->
+        <section id="needs" class="scroll-mt-24">
+            <div class="section-intro rounded-r-lg">
+                <p><strong>Giới thiệu phần này:</strong> Để Quý vị dễ dàng hình dung về các vật phẩm cần thiết cho một phần quà Tết ý nghĩa, chúng tôi đã trực quan hóa các hạng mục kêu gọi quyên góp dưới đây. Biểu đồ thể hiện cơ cấu các loại nhu yếu phẩm mà chương trình đang mong đợi.</p>
+            </div>
+            
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900">Chúng Tôi Cần Sự Chung Tay Của Quý Vị</h2>
+                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Sự ủng hộ của Quý vị, dù là hiện vật hay tiền mặt, đều là mảnh ghép quan trọng tạo nên mùa xuân cho bệnh nhân.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Chart 1: Items Breakdown -->
+                <div class="card p-6 flex flex-col items-center">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Các Nhu Yếu Phẩm Cần Thiết</h3>
+                    <div class="chart-container">
+                        <canvas id="itemsChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 text-center italic">Biểu đồ thể hiện các nhóm vật phẩm chính được kêu gọi ủng hộ (Gạo, Mì, Sữa, v.v.)</p>
+                </div>
+
+                <!-- Chart 2: Support Distribution (Conceptual) -->
+                <div class="card p-6 flex flex-col items-center">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Hình Thức Ủng Hộ</h3>
+                    <div class="chart-container">
+                        <canvas id="supportTypeChart"></canvas>
+                    </div>
+                    <div class="mt-4 w-full text-center">
+                        <div id="support-desc" class="p-3 bg-gray-50 rounded text-sm text-gray-700">
+                            Hãy di chuột vào biểu đồ để xem chi tiết ý nghĩa từng hình thức.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Image Gallery (MOVED HERE) -->
+        <section id="gallery" class="scroll-mt-24">
+            <div class="section-intro rounded-r-lg">
+                <p><strong>Hoạt động ý nghĩa:</strong> Những khoảnh khắc sẻ chia ấm áp và hình ảnh thực tế từ các chương trình hỗ trợ bệnh nhân mà chúng tôi đã và đang thực hiện.</p>
+            </div>
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900">Lan Tỏa Yêu Thương</h2>
+                <p class="mt-4 text-gray-600">Hình ảnh hoạt động thực tế tại Trung Tâm</p>
+            </div>
+
+            <!-- Grid Layout cho hình ảnh -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- Ảnh 1 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md aspect-w-4 aspect-h-3 h-64">
+                    <img src="./hinh1.jpg" 
+                         onerror="this.src='https://via.placeholder.com/400x300?text=Hinh+Anh+1'" 
+                         alt="Hoạt động từ thiện 1" 
+                         class="object-cover w-full h-full transform transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition duration-300 flex items-center justify-center">
+                        <p class="text-white font-bold opacity-0 group-hover:opacity-100 transition duration-300">Trao quà Tết</p>
+                    </div>
+                </div>
+
+                <!-- Ảnh 2 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md aspect-w-4 aspect-h-3 h-64">
+                    <img src="./hinh2.jpg" 
+                         onerror="this.src='https://via.placeholder.com/400x300?text=Hinh+Anh+2'" 
+                         alt="Hoạt động từ thiện 2" 
+                         class="object-cover w-full h-full transform transition duration-500 group-hover:scale-110">
+                </div>
+
+                <!-- Ảnh 3 -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md aspect-w-4 aspect-h-3 h-64">
+                    <img src="./hinh3.jpg" 
+                         onerror="this.src='https://via.placeholder.com/400x300?text=Hinh+Anh+3'" 
+                         alt="Hoạt động từ thiện 3" 
+                         class="object-cover w-full h-full transform transition duration-500 group-hover:scale-110">
+                </div>
+
+                <!-- Ảnh 4 (Nổi bật - Lớn hơn trên màn hình to) -->
+                <div class="group relative overflow-hidden rounded-lg shadow-md aspect-w-4 aspect-h-3 h-64 md:col-span-2">
+                    <img src="./hinh4.jpg" 
+                         onerror="this.src='https://via.placeholder.com/800x300?text=Hinh+Anh+4'" 
+                         alt="Hoạt động từ thiện 4" 
+                         class="object-contain w-full h-full transform transition duration-500 group-hover:scale-110">
+                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                        <p class="text-white font-medium">Chung tay vì sức khỏe cộng đồng</p>
+                    </div>
+                </div>
+
+               
+
+               
+                
+                <!-- Thẻ Kêu Gọi -->
+                <div class="bg-red-50 border-2 border-dashed border-red-300 rounded-lg flex flex-col items-center justify-center p-6 h-64 text-center">
+                    <div class="text-4xl mb-2">📸</div>
+                    <p class="text-gray-600 font-medium">Hành trình vẫn đang tiếp nối...</p>
+                    <p class="text-xs text-gray-400 mt-2">Cảm ơn Quý vị đã đồng hành</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Action Center (Interactive) -->
+        <section id="donate" class="scroll-mt-24 bg-red-50 rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+            <!-- Decorative circle -->
+            <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-red-200 rounded-full opacity-50"></div>
+
+            <div class="section-intro bg-white rounded-r-lg shadow-sm relative z-10">
+                <p><strong>Giới thiệu phần này:</strong> Đây là khu vực thông tin quan trọng nhất. Quý vị có thể chọn xem chi tiết về cách thức ủng hộ bằng Hiện vật hoặc Tiền mặt thông qua các nút bấm bên dưới. Thông tin liên hệ của Ban Tổ chức cũng được niêm yết công khai tại đây.</p>
+            </div>
+
+            <div class="relative z-10 text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">Phương Thức Ủng Hộ</h2>
+                <p class="text-gray-600 mt-2">Quý vị vui lòng chọn hình thức mong muốn để xem chi tiết</p>
+            </div>
+
+            <!-- Interaction Tabs -->
+            <div class="relative z-10 max-w-4xl mx-auto">
+                <div class="flex justify-center space-x-4 mb-8">
+                    <button id="btn-kind" class="px-6 py-3 rounded-full bg-white text-gray-700 font-bold shadow-sm hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 transition active-tab" onclick="toggleDonation('kind')">
+                        🎁 Ủng Hộ Hiện Vật
+                    </button>
+                    <button id="btn-cash" class="px-6 py-3 rounded-full bg-white text-gray-700 font-bold shadow-sm hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 transition" onclick="toggleDonation('cash')">
+                        💸 Ủng Hộ Tiền Mặt
+                    </button>
+                </div>
+
+                <!-- Dynamic Content Area -->
+                <div id="donation-content" class="card p-8 text-center transition-all duration-300">
+                    <!-- Content injected via JS -->
+                </div>
+
+                <!-- Contact Info -->
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500">
+                        <h4 class="font-bold text-gray-800 uppercase text-sm mb-2">Liên Hệ Trực Tiếp</h4>
+                        <p class="text-lg font-bold text-blue-900">CN. Nguyễn Thanh Liêm</p>
+                        <p class="text-gray-600 text-sm">Tổ công tác xã hội - TTYT Khu Vực Ngã Năm</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                        <h4 class="font-bold text-gray-800 uppercase text-sm mb-2">Đường Dây Nóng</h4>
+                        <p class="text-3xl font-bold text-green-700 tracking-wider">0347 279 276</p>
+                        <p class="text-gray-600 text-sm">Hỗ trợ 24/7</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Commitment -->
+        <section class="text-center py-8">
+            <div class="section-intro mx-auto max-w-2xl rounded-lg">
+                <p><strong>Cam kết của chúng tôi:</strong> Niềm tin của Quý vị là động lực của chúng tôi. Phần này khẳng định nguyên tắc hoạt động minh bạch của chương trình.</p>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Cam Kết Của Ban Tổ Chức</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-2xl mb-4">🔍</div>
+                    <h4 class="font-bold text-gray-800">Minh Bạch</h4>
+                    <p class="text-sm text-gray-600 mt-2">Mọi khoản đóng góp đều được ghi chép và công khai rõ ràng.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-2xl mb-4">🎯</div>
+                    <h4 class="font-bold text-gray-800">Đúng Mục Đích</h4>
+                    <p class="text-sm text-gray-600 mt-2">Sử dụng nguồn lực để hỗ trợ trực tiếp cho bệnh nhân.</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-2xl mb-4">🙌</div>
+                    <h4 class="font-bold text-gray-800">Trao Tận Tay</h4>
+                    <p class="text-sm text-gray-600 mt-2">Đảm bảo quà Tết đến trực tiếp với người cần giúp đỡ.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-gray-200 pt-8 mt-12 text-center text-gray-500 text-sm pb-8">
+            <p class="font-bold text-gray-700">TRUNG TÂM Y TẾ KHU VỰC NGÃ NĂM</p>
+            <p>Công đoàn – Chi đoàn Y tế – Tổ Công tác xã hội</p>
+            <p class="mt-4 italic">Xin chân thành cảm ơn tấm lòng vàng của Quý vị!</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- Navigation Logic ---
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // --- Data & State ---
+        const donationData = {
+            kind: {
+                title: "Danh Sách Hiện Vật Cần Thiết",
+                items: ["Gạo", "Mì gói", "Dầu ăn", "Đường", "Sữa", "Bánh kẹo", "Nhu yếu phẩm khác"],
+                icon: "🛍️",
+                desc: "Các nhu yếu phẩm này sẽ được đóng gói thành các phần quà Tết thiết thực."
+            },
+            cash: {
+                title: "Hỗ Trợ Tài Chính",
+                items: ["Mua sắm quà tết", "Vật dụng cần thiết", "Chi phí điều trị", "Hỗ trợ khẩn cấp"],
+                icon: "💰",
+                desc: "Tiền mặt sẽ được dùng để mua sắm vật tư thiếu hụt và hỗ trợ viện phí cho các ca bệnh nặng."
+            }
+        };
+
+        // --- Chart.js Implementations ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chart 1: Items Breakdown (Doughnut)
+            const ctxItems = document.getElementById('itemsChart').getContext('2d');
+            new Chart(ctxItems, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Gạo', 'Mì gói', 'Sữa', 'Dầu ăn/Gia vị', 'Bánh kẹo'],
+                    datasets: [{
+                        label: 'Tỷ lệ mong muốn',
+                        data: [30, 25, 15, 15, 15], // Estimated conceptual distribution
+                        backgroundColor: [
+                            '#D32F2F', // Red
+                            '#FBC02D', // Yellow
+                            '#1976D2', // Blue
+                            '#388E3C', // Green
+                            '#FFA000'  // Orange
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: "'Noto Sans', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Chart 2: Support Type (Bar) - Conceptual
+            const ctxSupport = document.getElementById('supportTypeChart').getContext('2d');
+            const supportChart = new Chart(ctxSupport, {
+                type: 'bar',
+                data: {
+                    labels: ['Hiện Vật', 'Tiền Mặt'],
+                    datasets: [{
+                        label: 'Mức độ linh hoạt',
+                        data: [80, 95], // Conceptual score: Cash is slightly more flexible
+                        backgroundColor: ['#EF5350', '#66BB6A'],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            display: false // Hide axis numbers for conceptual chart
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataIndex === 0 ? 
+                                        'Giúp bệnh nhân có cái ăn, cái mặc ngay tức thì.' : 
+                                        'Giúp chi trả viện phí và mua thuốc men cấp thiết.';
+                                }
+                            }
+                        }
+                    },
+                    onHover: (event, elements) => {
+                        const descBox = document.getElementById('support-desc');
+                        if (elements && elements.length > 0) {
+                            const index = elements[0].index;
+                            if (index === 0) {
+                                descBox.innerText = "Hiện vật: Gạo, mì, sữa... trực tiếp phục vụ sinh hoạt.";
+                                descBox.className = "p-3 bg-red-50 text-red-700 rounded text-sm transition-colors";
+                            } else {
+                                descBox.innerText = "Tiền mặt: Linh hoạt chi trả viện phí và bổ sung quà tặng.";
+                                descBox.className = "p-3 bg-green-50 text-green-700 rounded text-sm transition-colors";
+                            }
+                        } else {
+                            descBox.innerText = "Hãy di chuột vào biểu đồ để xem chi tiết ý nghĩa từng hình thức.";
+                            descBox.className = "p-3 bg-gray-50 text-gray-700 rounded text-sm transition-colors";
+                        }
+                    }
+                }
+            });
+
+            // Initialize default content
+            toggleDonation('kind');
+        });
+
+        // --- Interaction Logic ---
+        function toggleDonation(type) {
+            const contentDiv = document.getElementById('donation-content');
+            const btnKind = document.getElementById('btn-kind');
+            const btnCash = document.getElementById('btn-cash');
+            
+            // Update Buttons styling
+            if (type === 'kind') {
+                btnKind.classList.add('bg-red-600', 'text-white', 'ring-2', 'ring-red-300');
+                btnKind.classList.remove('bg-white', 'text-gray-700');
+                btnCash.classList.remove('bg-red-600', 'text-white', 'ring-2', 'ring-red-300');
+                btnCash.classList.add('bg-white', 'text-gray-700');
+            } else {
+                btnCash.classList.add('bg-green-600', 'text-white', 'ring-2', 'ring-green-300');
+                btnCash.classList.remove('bg-white', 'text-gray-700');
+                btnKind.classList.remove('bg-green-600', 'text-white', 'ring-2', 'ring-green-300');
+                btnKind.classList.add('bg-white', 'text-gray-700');
+            }
+
+            // Update Content with Animation
+            contentDiv.style.opacity = 0;
+            setTimeout(() => {
+                const data = donationData[type];
+                const listHtml = data.items.map(item => 
+                    `<li class="flex items-center justify-start bg-gray-50 p-3 rounded-lg"><span class="text-red-500 mr-2">✓</span> ${item}</li>`
+                ).join('');
+
+                contentDiv.innerHTML = `
+                    <div class="text-6xl mb-4 animate-bounce">${data.icon}</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">${data.title}</h3>
+                    <p class="text-gray-600 mb-6">${data.desc}</p>
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left max-w-lg mx-auto">
+                        ${listHtml}
+                    </ul>
+                `;
+                contentDiv.style.opacity = 1;
+            }, 200);
+        }
+
+    </script>
+</body>
+</html>
