@@ -61,17 +61,14 @@
             font-style: italic;
             color: #5D5D5D;
         }
+        
+        /* Hiệu ứng loading mượt mà cho bảng */
+        .table-loading {
+            opacity: 0.5;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
     </style>
-    <!-- Chosen Palette: Tet Harmony (Warm Neutrals #FFFAF0, Deep Red #D32F2F for accents, Dark Grey #4A4A4A for text) -->
-    <!-- Application Structure Plan: 
-         1. Hero Section: Sets the emotional tone.
-         2. Context & Story: Explains the 'Why'.
-         3. Interactive Needs Assessment: Visualizes donations.
-         4. Image Gallery: Shows real-world impact.
-         5. Action Center (Donate): How to give.
-         6. Public Donor List (NEW): Fetches data from API to show transparency.
-         7. Commitment & Trust: Transparency.
-    -->
 </head>
 <body class="antialiased">
 
@@ -81,8 +78,8 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center gap-2">
-                        <!-- LOGO CỦA BẠN (Thay đường dẫn ảnh bên dưới) -->
-                        <img src="https://via.placeholder.com/100x100?text=LOGO" 
+                        <!-- LOGO CỦA BẠN -->
+                        <img src="./logo.png" 
                              alt="Logo Đơn Vị" 
                              class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         
@@ -92,7 +89,7 @@
                 <div class="flex items-center space-x-4">
                     <button onclick="scrollToSection('story')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Câu Chuyện</button>
                     <button onclick="scrollToSection('needs')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Nhu Cầu</button>
-                    <button onclick="scrollToSection('gallery')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Hoạt động chia sẻ</button>
+                    <button onclick="scrollToSection('gallery')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Thư Viện</button>
                     <button onclick="scrollToSection('donors')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Danh Sách Ủng Hộ</button>
                     <button onclick="scrollToSection('donate')" class="bg-red-700 text-white hover:bg-red-800 px-4 py-2 rounded-md text-sm font-medium">Ủng Hộ Ngay</button>
                 </div>
@@ -255,7 +252,7 @@
                     </div>
                 </div>
 
-              
+                
                 
                 <!-- Thẻ Kêu Gọi -->
                 <div class="bg-red-50 border-2 border-dashed border-red-300 rounded-lg flex flex-col items-center justify-center p-6 h-64 text-center">
@@ -312,7 +309,7 @@
             </div>
         </section>
 
-        <!-- Section 4.5: Public Donor List (UPDATED WITH REAL API) -->
+        <!-- Section 4.5: Public Donor List (AUTO-REFRESH ENABLED) -->
         <section id="donors" class="scroll-mt-24">
             <div class="section-intro rounded-r-lg">
                 <p><strong>Minh bạch tài trợ:</strong> Danh sách công khai các mạnh thường quân đã ủng hộ. Dữ liệu được cập nhật tự động từ hệ thống.</p>
@@ -320,12 +317,18 @@
             
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-900">Danh Sách Công Khai Ủng Hộ</h2>
-                <p class="mt-2 text-gray-600">Cập nhật mới nhất từ hệ thống</p>
+                <div class="mt-2 text-sm text-gray-500 flex justify-center items-center gap-2">
+                    <span class="relative flex h-3 w-3">
+                      <span id="live-indicator-ping" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span id="live-indicator-dot" class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    <span id="last-updated-text">Đang kết nối hệ thống...</span>
+                </div>
             </div>
 
-            <div class="card overflow-hidden">
+            <div class="card overflow-hidden relative">
                 <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200 transition-opacity duration-300" id="donors-table">
                         <thead class="bg-red-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-center text-xs font-bold text-red-800 uppercase tracking-wider w-16">
@@ -355,8 +358,14 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 text-sm text-gray-500 text-right">
-                    * Dữ liệu được lấy từ Google Apps Script
+                <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 text-sm text-gray-500 text-right flex justify-between items-center">
+                    <button onclick="fetchDonors(true)" class="text-red-600 hover:text-red-800 text-xs font-bold flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Làm mới ngay
+                    </button>
+                    <span>* Tự động cập nhật mỗi 30 giây</span>
                 </div>
             </div>
         </section>
@@ -525,8 +534,14 @@
             // Initialize default content
             toggleDonation('kind');
             
-            // Initialize Donor Fetch
-            fetchDonors();
+            // --- AUTO REFRESH LOGIC ---
+            // 1. Fetch immediately
+            fetchDonors(); 
+            
+            // 2. Set interval to fetch every 30 seconds (30000ms)
+            setInterval(() => {
+                fetchDonors(true); // true = isBackgroundUpdate
+            }, 30000);
         });
 
         // --- Interaction Logic ---
@@ -568,52 +583,63 @@
             }, 200);
         }
         
-        // --- API & Table Logic ---
-        async function fetchDonors() {
+        // --- API & Table Logic (UPDATED FOR AUTO REFRESH) ---
+        let isFetching = false;
+
+        async function fetchDonors(isBackgroundUpdate = false) {
+            if (isFetching) return; // Prevent double fetching
+            isFetching = true;
+
             const tableBody = document.getElementById('donor-table-body');
-            
-            // LINK API THỰC TẾ CỦA BẠN
+            const tableElement = document.getElementById('donors-table');
+            const statusText = document.getElementById('last-updated-text');
+            const pingDot = document.getElementById('live-indicator-ping');
+            const solidDot = document.getElementById('live-indicator-dot');
+
+            // Visual feedback: If manual click, show opacity change immediately
+            // If background update, change subtly
+            if (isBackgroundUpdate) {
+                statusText.innerText = "Đang kiểm tra dữ liệu mới...";
+                pingDot.classList.remove('animate-ping'); // Stop ping momentarily
+                solidDot.classList.replace('bg-green-500', 'bg-yellow-500'); // Yellow = checking
+            } else {
+                // First load or manual click
+                tableElement.classList.add('table-loading');
+            }
+
             const apiUrl = 'https://script.google.com/macros/s/AKfycbzI8uiSMH5tVD966k_SjChDn25_QkH23twDSdcRWsiYxWTq2StvLKDX4W8YYsnehlE8OQ/exec'; 
 
             try {
-                // Gọi API thật
+                // Fetch data
                 const response = await fetch(apiUrl);
                 if (!response.ok) throw new Error('Lỗi kết nối API');
                 
                 let donors = await response.json();
                 
-                // --- XỬ LÝ DỮ LIỆU LINH HOẠT ---
-                // Vì chưa biết chính xác tên trường (key) trong JSON, 
-                // đoạn mã này sẽ tự tìm trường phù hợp cho "Tên" và "Số tiền/Hiện vật"
-                let nameKey = 'name'; // Mặc định
-                let amountKey = 'amount'; // Mặc định
+                // Auto-map Logic
+                let nameKey = 'name'; 
+                let amountKey = 'amount';
 
                 if (donors.length > 0) {
                     const firstItem = donors[0];
                     const keys = Object.keys(firstItem);
-                    
-                    // Tìm trường có vẻ là Tên
                     const possibleNameKeys = ['name', 'ten', 'nguoi_ung_ho', 'ho_ten', 'donor', 'full_name'];
                     const foundName = keys.find(k => possibleNameKeys.includes(k.toLowerCase()));
                     if (foundName) nameKey = foundName;
 
-                    // Tìm trường có vẻ là Số tiền/Ủng hộ
                     const possibleAmountKeys = ['amount', 'donation', 'so_tien', 'tien', 'ung_ho', 'hien_vat', 'gift'];
                     const foundAmount = keys.find(k => possibleAmountKeys.includes(k.toLowerCase()));
                     if (foundAmount) amountKey = foundAmount;
-                    
-                    console.log(`Đã tự động map: Tên -> ${nameKey}, Ủng hộ -> ${amountKey}`);
                 }
-                // --------------------------------
 
-                // Render dữ liệu ra bảng
+                // Render Table
                 if (donors && donors.length > 0) {
                     tableBody.innerHTML = donors.map((donor, index) => {
                         const name = donor[nameKey] || "Ẩn danh";
                         const amount = donor[amountKey] || "-";
                         
                         return `
-                        <tr class="hover:bg-gray-50 transition-colors">
+                        <tr class="hover:bg-gray-50 transition-colors animate-fade-in">
                             <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-500">
                                 ${index + 1}
                             </td>
@@ -629,15 +655,29 @@
                     tableBody.innerHTML = `<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">Chưa có dữ liệu ủng hộ nào.</td></tr>`;
                 }
 
+                // Update Status
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                statusText.innerText = `Cập nhật lúc: ${timeString}`;
+                solidDot.classList.replace('bg-yellow-500', 'bg-green-500'); // Green = active
+                pingDot.classList.add('animate-ping'); // Resume ping
+
             } catch (error) {
                 console.error("Lỗi tải danh sách:", error);
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="3" class="px-6 py-4 text-center text-red-500">
-                            Không thể tải dữ liệu từ API.<br>
-                            <span class="text-xs text-gray-400">Vui lòng kiểm tra đường truyền hoặc quyền truy cập của Link Apps Script.</span>
-                        </td>
-                    </tr>`;
+                // Only show error message if table is empty, otherwise keep old data and show error toast/text
+                if (tableBody.children.length <= 1) { 
+                     tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="px-6 py-4 text-center text-red-500">
+                                Không thể tải dữ liệu. Đang thử lại...
+                            </td>
+                        </tr>`;
+                }
+                statusText.innerText = "Lỗi kết nối. Đang thử lại...";
+                solidDot.classList.replace('bg-yellow-500', 'bg-red-500');
+            } finally {
+                isFetching = false;
+                tableElement.classList.remove('table-loading');
             }
         }
 
