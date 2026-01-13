@@ -67,9 +67,10 @@
          1. Hero Section: Sets the emotional tone.
          2. Context & Story: Explains the 'Why'.
          3. Interactive Needs Assessment: Visualizes donations.
-         4. Image Gallery: Shows real-world impact (Moved UP as requested).
+         4. Image Gallery: Shows real-world impact.
          5. Action Center (Donate): How to give.
-         6. Commitment & Trust: Transparency.
+         6. Public Donor List (NEW): Fetches data from API to show transparency.
+         7. Commitment & Trust: Transparency.
     -->
 </head>
 <body class="antialiased">
@@ -81,7 +82,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center gap-2">
                         <!-- LOGO CỦA BẠN (Thay đường dẫn ảnh bên dưới) -->
-                        <img src="./logo.png" 
+                        <img src="https://via.placeholder.com/100x100?text=LOGO" 
                              alt="Logo Đơn Vị" 
                              class="w-10 h-10 rounded-full object-cover border border-gray-200">
                         
@@ -91,7 +92,8 @@
                 <div class="flex items-center space-x-4">
                     <button onclick="scrollToSection('story')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Câu Chuyện</button>
                     <button onclick="scrollToSection('needs')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Nhu Cầu</button>
-                    <button onclick="scrollToSection('gallery')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Hoạt động sẻ chia</button>
+                    <button onclick="scrollToSection('gallery')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Hoạt động chia sẻ</button>
+                    <button onclick="scrollToSection('donors')" class="text-gray-600 hover:text-red-700 px-3 py-2 rounded-md text-sm font-medium">Danh Sách Ủng Hộ</button>
                     <button onclick="scrollToSection('donate')" class="bg-red-700 text-white hover:bg-red-800 px-4 py-2 rounded-md text-sm font-medium">Ủng Hộ Ngay</button>
                 </div>
             </div>
@@ -203,7 +205,7 @@
             </div>
         </section>
 
-        <!-- Section 3: Image Gallery (MOVED HERE) -->
+        <!-- Section 3: Image Gallery -->
         <section id="gallery" class="scroll-mt-24">
             <div class="section-intro rounded-r-lg">
                 <p><strong>Hoạt động ý nghĩa:</strong> Những khoảnh khắc sẻ chia ấm áp và hình ảnh thực tế từ các chương trình hỗ trợ bệnh nhân mà chúng tôi đã và đang thực hiện.</p>
@@ -253,9 +255,7 @@
                     </div>
                 </div>
 
-               
-
-               
+              
                 
                 <!-- Thẻ Kêu Gọi -->
                 <div class="bg-red-50 border-2 border-dashed border-red-300 rounded-lg flex flex-col items-center justify-center p-6 h-64 text-center">
@@ -308,6 +308,55 @@
                         <p class="text-3xl font-bold text-green-700 tracking-wider">0347 279 276</p>
                         <p class="text-gray-600 text-sm">Hỗ trợ 24/7</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4.5: Public Donor List (UPDATED WITH REAL API) -->
+        <section id="donors" class="scroll-mt-24">
+            <div class="section-intro rounded-r-lg">
+                <p><strong>Minh bạch tài trợ:</strong> Danh sách công khai các mạnh thường quân đã ủng hộ. Dữ liệu được cập nhật tự động từ hệ thống.</p>
+            </div>
+            
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">Danh Sách Công Khai Ủng Hộ</h2>
+                <p class="mt-2 text-gray-600">Cập nhật mới nhất từ hệ thống</p>
+            </div>
+
+            <div class="card overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-red-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-bold text-red-800 uppercase tracking-wider w-16">
+                                    STT
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-bold text-red-800 uppercase tracking-wider">
+                                    Người Ủng Hộ
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-bold text-red-800 uppercase tracking-wider">
+                                    Ủng Hộ (Tiền/Hiện Vật)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="donor-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Rows will be populated by JS -->
+                            <tr>
+                                <td colspan="3" class="px-6 py-4 text-center text-gray-500 italic">
+                                    <div class="flex justify-center items-center">
+                                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Đang tải dữ liệu trực tiếp...
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 text-sm text-gray-500 text-right">
+                    * Dữ liệu được lấy từ Google Apps Script
                 </div>
             </div>
         </section>
@@ -475,6 +524,9 @@
 
             // Initialize default content
             toggleDonation('kind');
+            
+            // Initialize Donor Fetch
+            fetchDonors();
         });
 
         // --- Interaction Logic ---
@@ -514,6 +566,79 @@
                 `;
                 contentDiv.style.opacity = 1;
             }, 200);
+        }
+        
+        // --- API & Table Logic ---
+        async function fetchDonors() {
+            const tableBody = document.getElementById('donor-table-body');
+            
+            // LINK API THỰC TẾ CỦA BẠN
+            const apiUrl = 'https://script.google.com/macros/s/AKfycbzI8uiSMH5tVD966k_SjChDn25_QkH23twDSdcRWsiYxWTq2StvLKDX4W8YYsnehlE8OQ/exec'; 
+
+            try {
+                // Gọi API thật
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Lỗi kết nối API');
+                
+                let donors = await response.json();
+                
+                // --- XỬ LÝ DỮ LIỆU LINH HOẠT ---
+                // Vì chưa biết chính xác tên trường (key) trong JSON, 
+                // đoạn mã này sẽ tự tìm trường phù hợp cho "Tên" và "Số tiền/Hiện vật"
+                let nameKey = 'name'; // Mặc định
+                let amountKey = 'amount'; // Mặc định
+
+                if (donors.length > 0) {
+                    const firstItem = donors[0];
+                    const keys = Object.keys(firstItem);
+                    
+                    // Tìm trường có vẻ là Tên
+                    const possibleNameKeys = ['name', 'ten', 'nguoi_ung_ho', 'ho_ten', 'donor', 'full_name'];
+                    const foundName = keys.find(k => possibleNameKeys.includes(k.toLowerCase()));
+                    if (foundName) nameKey = foundName;
+
+                    // Tìm trường có vẻ là Số tiền/Ủng hộ
+                    const possibleAmountKeys = ['amount', 'donation', 'so_tien', 'tien', 'ung_ho', 'hien_vat', 'gift'];
+                    const foundAmount = keys.find(k => possibleAmountKeys.includes(k.toLowerCase()));
+                    if (foundAmount) amountKey = foundAmount;
+                    
+                    console.log(`Đã tự động map: Tên -> ${nameKey}, Ủng hộ -> ${amountKey}`);
+                }
+                // --------------------------------
+
+                // Render dữ liệu ra bảng
+                if (donors && donors.length > 0) {
+                    tableBody.innerHTML = donors.map((donor, index) => {
+                        const name = donor[nameKey] || "Ẩn danh";
+                        const amount = donor[amountKey] || "-";
+                        
+                        return `
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium text-gray-500">
+                                ${index + 1}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                ${name}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-bold text-green-600">
+                                ${amount}
+                            </td>
+                        </tr>
+                    `}).join('');
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="3" class="px-6 py-4 text-center text-gray-500">Chưa có dữ liệu ủng hộ nào.</td></tr>`;
+                }
+
+            } catch (error) {
+                console.error("Lỗi tải danh sách:", error);
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="px-6 py-4 text-center text-red-500">
+                            Không thể tải dữ liệu từ API.<br>
+                            <span class="text-xs text-gray-400">Vui lòng kiểm tra đường truyền hoặc quyền truy cập của Link Apps Script.</span>
+                        </td>
+                    </tr>`;
+            }
         }
 
     </script>
